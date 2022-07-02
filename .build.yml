@@ -1,0 +1,23 @@
+image: alpine/edge
+packages:
+  - build-base
+sources:
+  - git@git.sr.ht:~fmrsn/aoc2021
+secrets:
+  - 270fb008-0636-482b-880e-d6c2472ada6c
+tasks:
+  - mirror: |
+      ssh-keyscan github.com >>~/.ssh/known_hosts
+      cd aoc2021
+      git push --mirror git@github.com:fmrsn/aoc2021
+  - build: |
+      cd aoc2021
+      for day in day*; do
+        (cd $day; make)
+      done
+  - test: |
+      cd aoc2021
+      for day in day*; do
+        (cd $day; make check)
+      done
+
