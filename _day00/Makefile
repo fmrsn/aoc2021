@@ -1,0 +1,2 @@
+.POSIX:
+include ../common.mk
