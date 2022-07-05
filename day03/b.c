@@ -12,11 +12,11 @@
 static int
 compare(const void *a, const void *b)
 {
-	return (*(unsigned short *)a - *(unsigned short *)b);
+	return (*(int *)a - *(int *)b);
 }
 
-static unsigned
-find_rating(unsigned short *nums, size_t nums_count, size_t pattern_len, int criterium)
+static long
+find_rating(int *nums, size_t nums_count, size_t pattern_len, int criterium)
 {
 	size_t shift = criterium ? 1 : 0;
 	size_t begin = 0;
@@ -46,20 +46,15 @@ find_rating(unsigned short *nums, size_t nums_count, size_t pattern_len, int cri
 int
 main(void)
 {
-	unsigned short nums[1024];
-	unsigned short *n = nums;
+	int nums[1024];
+	int *n = nums;
 
 	char buf[64];
 	while (scanf(" %s", buf) != EOF) {
 		if (n >= nums + array_size(nums)) {
 			die("didn't expect more than %zu numbers\n", array_size(nums));
 		}
-		char *end;
-		errno = 0;
-		*n++ = strtoul(buf, &end, 2);
-		if (errno != 0 || *end != '\0') {
-			die("%s: not a binary number\n", buf);
-		}
+		*n++ = must_strtol(buf, 2);
 	}
 	size_t nums_count = n - nums;
 	if (nums_count == 0) {
@@ -68,8 +63,8 @@ main(void)
 
 	qsort(nums, nums_count, sizeof(nums[0]), compare);
 	size_t pattern_len = strlen(buf);
-	unsigned o = find_rating(nums, nums_count, pattern_len, 1);
-	unsigned co2 = find_rating(nums, nums_count, pattern_len, 0);
+	long o = find_rating(nums, nums_count, pattern_len, 1);
+	long co2 = find_rating(nums, nums_count, pattern_len, 0);
 
-	printf("%u\n", o * co2);
+	printf("%ld\n", o * co2);
 }
