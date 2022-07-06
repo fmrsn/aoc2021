@@ -1,3 +1,9 @@
+#include <errno.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define array_size(a) (sizeof (a) / sizeof (a)[0])
 
 static inline void

@@ -1,10 +1,5 @@
-#include <errno.h>
 #include <limits.h>
-#include <stdarg.h>
 #include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../common.h"
 
 #define bit_set(n, i) ((n) & (1 << (i)))
